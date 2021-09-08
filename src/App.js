@@ -12,6 +12,7 @@ function App() {
     console.log(inputText);
 
     setMovieList([]);
+    setSelectedMovie(false);
 
     const data = await fetch(`${API_URL}${inputText}`);
     const response = await data.json();
@@ -22,6 +23,11 @@ function App() {
       console.log('movieList movieList', movieList);
     }
   };
+
+  const handleSelect = (movie) => {
+      setSelectedMovie(movie);
+      console.log(movie);
+  }
   return (
     <div>
       <input
@@ -35,13 +41,13 @@ function App() {
       <button onClick={handleSearch}>Sök</button>
       <div>
         {movieList.map((movie) => (
-          <p onClick={} key={movie.imdbID}>{movie.Title}</p>
+          <p onClick={() => handleSelect(movie)} key={movie.imdbID}>{movie.Title}</p>
         ))}
       </div>
       {selectedMovie && (
         <div>
-          <p>test</p>
-          <p>test</p>
+          <p>{selectedMovie.Title}</p>
+          <img src={selectedMovie.Poster} />
         </div>
       )}
     </div>
