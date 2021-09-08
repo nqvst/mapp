@@ -9,16 +9,14 @@ function App() {
   const handleSearch = async (e) => {
     console.log(inputText);
     const data = await fetch(`${API_URL}${inputText}`);
-    console.log(data);
     const response = await data.json();
 
-    // console.log(response);
-    if (response && response.Response === 'True') {
+    if (data?.ok && response?.Response === 'True') {
         setMovieList(response.Search);
     }
 
   };
-
+    console.log(movieList);
   return (
     <div>
       <input
@@ -30,7 +28,11 @@ function App() {
         placeholder="movie title"
       />
       <button onClick={handleSearch}>Sök</button>
-      {inputText}
+      <div>
+          {movieList.map(movie => (
+              <p key={movie.imdbID}>{movie.Title}</p>
+          ))}
+      </div>
     </div>
   );
 }
